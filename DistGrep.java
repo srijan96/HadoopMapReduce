@@ -8,7 +8,6 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
-//import org.apache.hadoop.mapred.JobConf;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.FileSplit;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
@@ -21,14 +20,9 @@ public class DistGrep {
     private Text fname = new Text();
     
     String pattern = ".*?hadoop.*?";
-    /*public void configure(JobConf job) {
-       pattern = job.get("pattern");
-   }*/
     
     public void map(Object key, Text value, Context context)  throws IOException, InterruptedException 
     {
-    	     // pattern = ".*?" + pattern + ".*?";
-    
 	      String fileName = ((FileSplit) context.getInputSplit()).getPath().getName();
 	      fname.set(fileName);
 	      
@@ -57,9 +51,6 @@ public class DistGrep {
 
   public static void main(String[] args) throws Exception {
     Configuration conf = new Configuration();
-    /*String pattern = "Hadoop";
-    if(args.length > 2)	pattern = args[2];
-    conf.set("pattern", pattern);*/
     Job job = Job.getInstance(conf, "distributed grep");
     job.setJarByClass(DistGrep.class);
     job.setMapperClass(TokenizerMapper.class);
