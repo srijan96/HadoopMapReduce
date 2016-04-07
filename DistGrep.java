@@ -19,16 +19,22 @@ public class DistGrep {
     private Text line = new Text();
     private Text fname = new Text();
     
-    String pattern = ".*?hadoop.*?";
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_RED = "\u001B[31m";
     
     public void map(Object key, Text value, Context context)  throws IOException, InterruptedException 
-    {
+    {    
+	      Configuration conf = context.getConfiguration();
+	      String obj = conf.get("pattern");
+              String pattern = ".*?"+obj+".*?";
+	      
 	      String fileName = ((FileSplit) context.getInputSplit()).getPath().getName();
 	      fname.set(fileName);
 	      
 	      String cur = value.toString();
 	      if(cur.matches(pattern))
 	      {
+	        cur = cur.replace(obj,ANSI_RED+obj+ANSI_RESET);
 		line.set(cur);
 		context.write(fname, line);
 	      }
@@ -40,7 +46,7 @@ public class DistGrep {
 
     public void reduce(Text key, Iterable<Text> values, Context context )  throws IOException, InterruptedException 
     {
-	      String res = "Matches in :\n";
+	      String res = "";
 	      for (Text val : values) {
 		res = res + val.toString() + "\n";
 	      }
@@ -51,6 +57,9 @@ public class DistGrep {
 
   public static void main(String[] args) throws Exception {
     Configuration conf = new Configuration();
+    String pattern = "Hadoop";
+    if(args.length > 2)	pattern = args[2];
+    conf.set("pattern", pattern);
     Job job = Job.getInstance(conf, "distributed grep");
     job.setJarByClass(DistGrep.class);
     job.setMapperClass(TokenizerMapper.class);
