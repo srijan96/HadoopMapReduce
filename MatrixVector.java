@@ -35,7 +35,7 @@ public class MatrixVector {
     }
  } 
         
- public static class Reduce extends Reducer<IntWritable, Text, Text, IntWritable> {
+ public static class Reduce extends Reducer<IntWritable, Text, IntWritable, IntWritable> {
 
     public void reduce(IntWritable key, Iterable<Text> values, Context context) 
       throws IOException, InterruptedException 
