@@ -1,4 +1,4 @@
-This repository contains Hadoop Map-Reduce programs written in JAVA.
+<h3>This repository contains Hadoop Map-Reduce programs written in JAVA.</h3>
 
 <h1>Inverse Web Link</h1>
     source  : InverseLink.java
@@ -19,12 +19,23 @@ This repository contains Hadoop Map-Reduce programs written in JAVA.
 <h1>Matrix Multiplication(1-step,sparse matrix)</h1>
     source  : MatrixMultiplySingleStep.java
     helper  : matrixMultiplySingleStep.sh
+    input   : As shown in sample file matrix.mat2
+              Each line of input file should contain
+                Name of matrix ( A for left and B for right)
+                Row number
+                Column number
+                Element at the specified <row,column>
 <h1>Matrix Vector Multiply</h1>
     source  : MatrixVectorMultiply.java
     helper  : matrixVectorMultiply.sh
+    input   : Give the matrix in standard sparse matrix form , each line containing (i,j,A[i][j])
+              Give the vector in a single line separrated by commas
+              
+              Sample input given as matrix.mat and vector.vec
 <h1>Matrix Vector Multiply(Split in stripes)</h1>
     source  : MatrixVectorMultiplySplitted.java
     helper  : matrixVectorMultiplySplitted.sh
+    input   : Each stripe of the input will be like matrix.mat and vector.vec
 
 <hr><h3>To run this programs , follow the steps given below :</h3>
 
