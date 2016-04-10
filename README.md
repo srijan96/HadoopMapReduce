@@ -11,9 +11,10 @@ This repository contains Hadoop Map-Reduce programs written in JAVA.
 <h1>Matrix Multiplication(2-step,dense matrix)</h1>
     source  : MatrixMultiply.java  and MatStep2.java
     helper  : multi.sh
-    input   : Give the matrices in a text file saved in names left.mat and right.mat</br>
-              For each of them , each line will contain a row and in the line , first put the line number</br>
-              and then put the elements of the row .The right matrix should be transposed.</br>
+    input   : Give the matrices in a text file saved in names left.mat and right.mat
+              For each of them , each line will contain a row and in the line , first put the line number
+              and then put the elements of the row .The right matrix should be transposed.
+              
               Sample input files given as left.mat and right.mat
 <h1>Matrix Multiplication(1-step,sparse matrix)</h1>
     source  : MatrixMultiplySingleStep.java
@@ -25,7 +26,7 @@ This repository contains Hadoop Map-Reduce programs written in JAVA.
     source  : MatrixVectorMultiplySplitted.java
     helper  : matrixVectorMultiplySplitted.sh
 
-</br><hr></br><h3>To run this programs , follow the steps given below :</h3>
+<hr><h3>To run this programs , follow the steps given below :</h3>
 
 1> Compile the program
 
