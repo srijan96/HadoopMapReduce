@@ -1,6 +1,23 @@
 This repository contains Hadoop Map-Reduce programs written in JAVA.
 
 <h1>Inverse Web Link</h1>
+    source  : InverseLink.java
+    helper  : invLink.sh   
+<h1>Distributed grep</h1>
+    source  : DistGep.java
+    helper  : dGrep.sh
+<h1>Matrix Multiplication(2-step,dense matrix)</h1>
+    source  : MatrixMultiply.java  and MatStep2.java
+    helper  : multi.sh
+<h1>Matrix Multiplication(1-step,sparse matrix)</h1>
+    source  : MatrixMultiplySingleStep.java
+    helper  : matrixMultiplySingleStep.sh
+<h1>Matrix Vector Multiply</h1>
+    source  : MatrixVectorMultiply.java
+    helper  : matrixVectorMultiply.sh
+<h1>Matrix Vector Multiply(Split in stripes)</h1>
+    source  : MatrixVectorMultiplySplitted.java
+    helper  : matrixVectorMultiplySplitted.sh
 
 To run this programs , follow the steps given below :
 
