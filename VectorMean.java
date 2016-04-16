@@ -14,9 +14,9 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 public class VectorMean {
 
-  public static class TokenizerMapper extends Mapper<Object, Text, Text, Text>{
+  public static class TokenizerMapper extends Mapper<Object, Text, IntWritable, Text>{
 	
-	private Text keyOut = new Text();
+	private IntWritable keyOut = new IntWritable();
 	private Text valOut = new Text();
 
 	public void map(Object key, Text value, Context context) throws IOException, InterruptedException 
@@ -24,7 +24,7 @@ public class VectorMean {
 		String[] in = value.toString().split("\\s");
 		if(in.length >= 2)
 		{
-			keyOut.set(in[0]);
+			keyOut.set(Integer.parseInt(in[0]));
 			valOut.set(in[1]);
 			context.write(keyOut,valOut);
 		}
@@ -32,22 +32,27 @@ public class VectorMean {
 		
   }
 
-  public static class IntSumReducer extends Reducer<Text,Text,Text,Text> {
+  public static class IntSumReducer extends Reducer<IntWritable,Text,IntWritable,Text> {
   
 	private Text res = new Text();
-	public void reduce(Text key, Iterable<Text> values,Context context) throws IOException, InterruptedException 
+	public void reduce(IntWritable key, Iterable<Text> values,Context context) throws IOException, InterruptedException 
 	{
 		float[] arr = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+		int count = 0;
 		for(Text val:values)
 		{
 			String[] l = val.toString().split(",");
 			for(int i=0;i<l.length && i<18;i++)
 				arr[i] = arr[i]+Float.parseFloat(l[i]);
+			count = count + 1;
 		}
-		String s = Float.toString(arr[0]);
-		for(int i=1; i<18;i++)		s = s+","+Float.toString(arr[i]);
-		res.set(s);
-		context.write(key,res);
+		if(count > 0)
+		{
+			String s = Float.toString(arr[0]/count);
+			for(int i=1; i<18;i++)		s = s+","+Float.toString(arr[i]/count);
+			res.set(s);
+			context.write(key,res);
+		}
 	}
   }
 
@@ -58,7 +63,7 @@ public class VectorMean {
 	job.setJarByClass(VectorMean.class);
 	job.setMapperClass(TokenizerMapper.class);
 	job.setReducerClass(IntSumReducer.class);
-	job.setOutputKeyClass(Text.class);
+	job.setOutputKeyClass(IntWritable.class);
 	job.setOutputValueClass(Text.class);
 	FileInputFormat.addInputPath(job, new Path(args[0]));
 	FileOutputFormat.setOutputPath(job, new Path(args[1]));
